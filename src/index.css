@@ -5,6 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url(/src/img/bulb-2124338.png) no-repeat;
+  background-size: 100%;
+  background-position: top;
+  background-attachment: fixed;
+  background-color: #161111;
+  min-height: 100%;
 }
 
 code {
