@@ -31,7 +31,7 @@ function ProjectSummary(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   const { projects } = props;
-  console.log(projects);
+  //   console.log(projects);
 
   return (
     <Card className={classes.root} variant='outlined'>
@@ -44,13 +44,13 @@ function ProjectSummary(props) {
           Project
         </Typography>
         <Typography variant='h5' component='h2'>
-          {projects.title}
+          {props.title}
         </Typography>
         <Typography className={classes.pos} color='textSecondary'>
-          16/02/2021
+          {props.date}
         </Typography>
         <Typography variant='body2' component='p'>
-          {projects.content}
+          {props.content}
         </Typography>
       </CardContent>
       <CardActions>
@@ -62,8 +62,8 @@ function ProjectSummary(props) {
 }
 
 const mapStateToProps = (state) => {
-  const project = state.project.projects;
-  console.log(state);
+  const project = state.project.items;
+  console.log(project);
   return {
     projects: project,
   };

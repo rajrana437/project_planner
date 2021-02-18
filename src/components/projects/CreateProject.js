@@ -11,6 +11,20 @@ import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { createProject } from '../../actions/projectActions';
 
+var today = new Date();
+var dd = today.getDate();
+
+var mm = today.getMonth() + 1;
+var yyyy = today.getFullYear();
+if (dd < 10) {
+  dd = '0' + dd;
+}
+if (mm < 10) {
+  mm = '0' + mm;
+}
+today = dd + '/' + mm + '/' + yyyy;
+console.log(today);
+
 const useStyles = makeStyles({
   root: {
     '& > *': {
@@ -45,6 +59,7 @@ function CreateProject(props) {
   const [project, setProject] = useState({
     title: '',
     content: '',
+    date: today,
   });
 
   function handleTextChange(event) {

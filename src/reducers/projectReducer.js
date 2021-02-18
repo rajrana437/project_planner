@@ -1,15 +1,14 @@
 import { CREATE_PROJECT, CREATE_PROJECT_ERROR } from '../actions/types';
 
-const initState = {
-  projects: [],
-};
+// const initState = {
+//   projects: [],
+// };
 
-const projectReducer = (state = initState, action) => {
-  let newProjects = '';
+const projectReducer = (state = { items: [] }, action) => {
   switch (action.type) {
     case CREATE_PROJECT:
-      //   console.log('created project', action.project);
-      return { ...state, projects: action.project };
+      console.log('newww', state);
+      return { items: [...state.items, action.project] };
 
     case CREATE_PROJECT_ERROR:
       console.log('create project error', action.err);
