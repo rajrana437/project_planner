@@ -10,10 +10,10 @@ import theme from '../../theme';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { createProject } from '../../actions/projectActions';
+import { Link } from 'react-router-dom';
 
 var today = new Date();
 var dd = today.getDate();
-
 var mm = today.getMonth() + 1;
 var yyyy = today.getFullYear();
 if (dd < 10) {
@@ -24,6 +24,14 @@ if (mm < 10) {
 }
 today = dd + '/' + mm + '/' + yyyy;
 console.log(today);
+
+var time = new Date();
+var currentTime = time.toLocaleString('en-US', {
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true,
+});
+console.log(currentTime);
 
 const useStyles = makeStyles({
   root: {
@@ -60,6 +68,7 @@ function CreateProject(props) {
     title: '',
     content: '',
     date: today,
+    time: currentTime,
   });
 
   function handleTextChange(event) {
@@ -115,7 +124,9 @@ function CreateProject(props) {
               color='secondary'
               onClick={handleSubmit}
             >
-              Submit
+              <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+                Submit
+              </Link>
             </Button>
           </CardActions>
         </Card>

@@ -8,6 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import theme from '../../theme';
 import { Grid } from '@material-ui/core';
+import { connect } from 'react-redux';
+import Dashboard from '../dashboard/Dashboard';
+import { Link, Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +19,7 @@ const useStyles = makeStyles({
       width: '69ch',
     },
     // marginTop: 72,
-    maxWidth: 720,
+    maxWidth: 680,
   },
   bullet: {
     display: 'inline-block',
@@ -36,7 +39,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SignIn() {
+function SignIn(props) {
+  const { userRegisterd } = props;
+  console.log(userRegisterd);
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -56,6 +61,7 @@ export default function SignIn() {
     });
   }
   console.log(users);
+
   // function handleSubmit(event) {
   //   props.createProject(project);
   //   setUsers({
@@ -64,6 +70,36 @@ export default function SignIn() {
   //   });
   //   event.preventDefault();
   // }
+
+  function handleSubmit(event) {
+    console.log(users.email);
+    console.log(users.password);
+    console.log('tesla', userRegisterd);
+    event.preventDefault();
+    var email = users.email;
+    var password = users.password;
+    var valid = false;
+    var invalid = true;
+
+    var emailArray = userRegisterd.map(({ email }) => email);
+
+    console.log('all emails', emailArray);
+    var passwordArray = userRegisterd.map(({ password }) => password);
+    console.log('all passwords', passwordArray);
+
+    for (var i = 0; i < emailArray.length; i++) {
+      if (email == emailArray[i] && password == passwordArray[i]) {
+        valid = true;
+      }
+    }
+    if (valid) {
+      alert('Succesfully Updated');
+      window.location.href = '/create';
+    } else {
+      alert('Incorrect email or password');
+      return false;
+    }
+  }
 
   return (
     <Grid className={classes.gridContainer} container spacing={4}>
@@ -75,6 +111,8 @@ export default function SignIn() {
             </Typography>
             <form className={classes.root} noValidate autoComplete='off'>
               <TextField
+                required
+                variant='outlined'
                 onChange={handleChange}
                 name='email'
                 value={users.email}
@@ -82,6 +120,8 @@ export default function SignIn() {
                 label='Email'
               />
               <TextField
+                required
+                variant='outlined'
                 onChange={handleChange}
                 name='password'
                 value={users.password}
@@ -93,7 +133,11 @@ export default function SignIn() {
             </form>
           </CardContent>
           <CardActions>
-            <Button variant='contained' color='secondary'>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={handleSubmit}
+            >
               Login
             </Button>
           </CardActions>
@@ -102,3 +146,13 @@ export default function SignIn() {
     </Grid>
   );
 }
+
+const mapStateToProps = (state) => {
+  const users = state.user.usersList;
+  console.log('registered', users);
+  return {
+    userRegisterd: users,
+  };
+};
+
+export default connect(mapStateToProps)(SignIn);

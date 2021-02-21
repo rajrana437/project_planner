@@ -6,13 +6,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
+import { Grid } from '@material-ui/core';
+import { deleteProject } from '../../actions/projectActions';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 500,
-    // marginLeft: 30,
-    // marginTop: 70,
-    // marginBottom: 20,
+    minWidth: 400,
+    marginBottom: 20,
+    paddingLeft: 20,
   },
   bullet: {
     display: 'inline-block',
@@ -29,44 +30,61 @@ const useStyles = makeStyles({
 
 function ProjectSummary(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-  const { projects } = props;
-  //   console.log(projects);
 
+  function handleDelete(event) {
+    props.deleteProject(props.id);
+  }
+
+  console.log(props.id);
   return (
-    <Card className={classes.root} variant='outlined'>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color='textSecondary'
-          gutterBottom
-        >
-          Project
-        </Typography>
-        <Typography variant='h5' component='h2'>
-          {props.title}
-        </Typography>
-        <Typography className={classes.pos} color='textSecondary'>
-          {props.date}
-        </Typography>
-        <Typography variant='body2' component='p'>
-          {props.content}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size='small'>Edit</Button>
-        <Button size='small'>Delete</Button>
-      </CardActions>
-    </Card>
+    <Grid className={classes.root} xs={12} container spacing={2}>
+      <Card className={classes.root} variant='outlined'>
+        <CardContent>
+          <Typography
+            className={classes.title}
+            color='textSecondary'
+            gutterBottom
+          >
+            Project
+          </Typography>
+          <Typography variant='h5' component='h2'>
+            {props.title}
+          </Typography>
+          <Typography className={classes.pos} color='textSecondary'>
+            {props.date} {props.time}
+          </Typography>
+          <Typography variant='body2' component='p'>
+            {props.content}
+          </Typography>
+          {/* 
+          <Typography color='textSecondary'>
+            Created by {props.firstName}
+          </Typography> */}
+        </CardContent>
+        <CardActions>
+          <Button onClick={handleDelete} size='small'>
+            Delete
+          </Button>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 }
 
-const mapStateToProps = (state) => {
-  const project = state.project.items;
-  console.log(project);
+const mapDispatchToProps = (dispatch) => {
   return {
-    projects: project,
+    deleteProject: (id) => dispatch(deleteProject(id)),
   };
 };
 
-export default connect(mapStateToProps)(ProjectSummary);
+const mapStateToProps = (state) => {
+  const project = state.project.items;
+  const users = state.user.usersList;
+  console.log(project);
+  return {
+    projects: project,
+    userRegisterd: users,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectSummary);

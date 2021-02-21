@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,6 +8,11 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import theme from '../../theme';
 import { Grid } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+import { createUser } from '../../actions/authActions';
+import { Redirect, Link } from 'react-router-dom';
+import SignIn from './SignIn';
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +21,7 @@ const useStyles = makeStyles({
       width: '69ch',
     },
     // marginTop: 72,
-    maxWidth: 720,
+    maxWidth: 680,
   },
   bullet: {
     display: 'inline-block',
@@ -36,7 +41,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SignUp(props) {
+function SignUp(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -57,15 +62,19 @@ export default function SignUp(props) {
       };
     });
   }
-  console.log(users);
-  // function handleSubmit(event) {
-  //   props.createProject(project);
-  //   setUsers({
-  //     title: '',
-  //     content: '',
-  //   });
-  //   event.preventDefault();
-  // }
+
+  function handleSubmit(event) {
+    props.createUser(users);
+    setUsers({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    });
+    alert('User Registered');
+    event.preventDefault();
+    return true;
+  }
 
   return (
     <Grid className={classes.gridContainer} container spacing={4}>
@@ -77,6 +86,7 @@ export default function SignUp(props) {
             </Typography>
             <form className={classes.root} noValidate autoComplete='off'>
               <TextField
+                variant='outlined'
                 name='firstName'
                 value={users.firstName}
                 onChange={handleChange}
@@ -84,6 +94,7 @@ export default function SignUp(props) {
                 label='First Name'
               />
               <TextField
+                variant='outlined'
                 name='lastName'
                 value={users.lastName}
                 onChange={handleChange}
@@ -91,6 +102,7 @@ export default function SignUp(props) {
                 label='Last Name'
               />
               <TextField
+                variant='outlined'
                 name='email'
                 value={users.email}
                 onChange={handleChange}
@@ -98,6 +110,7 @@ export default function SignUp(props) {
                 label='Email'
               />
               <TextField
+                variant='outlined'
                 name='password'
                 value={users.password}
                 onChange={handleChange}
@@ -109,8 +122,17 @@ export default function SignUp(props) {
             </form>
           </CardContent>
           <CardActions>
-            <Button variant='contained' color='secondary'>
-              Signup
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={handleSubmit}
+            >
+              <Link
+                style={{ textDecoration: 'none', color: 'white' }}
+                to='/signin'
+              >
+                Signup
+              </Link>
             </Button>
           </CardActions>
         </Card>
@@ -118,3 +140,11 @@ export default function SignUp(props) {
     </Grid>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createUser: (users) => dispatch(createUser(users)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SignUp);

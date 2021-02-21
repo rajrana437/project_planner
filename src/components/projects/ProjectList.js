@@ -12,25 +12,56 @@ const useStyles = makeStyles({
   },
 });
 
-function createCard(project) {
-  return (
-    <ProjectSummary
-      title={project.title}
-      content={project.content}
-      date={project.date}
-    />
-  );
-}
+// var time = new Date();
+// var currentTime = time.toLocaleString('en-US', {
+//   hour: 'numeric',
+//   minute: 'numeric',
+//   hour12: true,
+// });
+// console.log(currentTime);
 
 const ProjectList = (props) => {
-  const { projects } = props;
+  const { projects, userRegisterd } = props;
   console.log(projects);
   const classes = useStyles();
+
+  function deleteProject(id) {
+    // projects((project) => {
+    //   return project.filter((projectItem, index) => {
+    //     return index !== id;
+    //   });
+    // });
+    projects.filter((projectItem, index) => {
+      return index !== projectItem.id;
+    });
+    console.log('deleteeee', projects[id]);
+  }
+
+  //   var firstNameArray = userRegisterd.map(({ firstName }) => firstName);
+  //   const latestName = firstNameArray[firstNameArray.length - 1];
+
+  //   console.log('registered user', userRegisterd);
+
+  //   console.log('lastUser', latestName);
   return (
     <Fragment>
       <Grid className={classes.gridContainer} container spacing={4}>
         <Grid item xs={12}>
-          {projects.map(createCard)}
+          {/* {projects.map(createCard)} */}
+          {projects.map((projectItem, index) => {
+            return (
+              <ProjectSummary
+                key={index}
+                id={index}
+                title={projectItem.title}
+                content={projectItem.content}
+                date={projectItem.date}
+                time={projectItem.time}
+                onDelete={deleteProject}
+                // firstName={latestName}
+              />
+            );
+          })}
         </Grid>
       </Grid>
     </Fragment>
@@ -39,9 +70,11 @@ const ProjectList = (props) => {
 
 const mapStateToProps = (state) => {
   const project = state.project.items;
+  const users = state.user.usersList;
   console.log(project);
   return {
     projects: project,
+    userRegisterd: users,
   };
 };
 
