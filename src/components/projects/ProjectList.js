@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Fragment } from 'react';
 import { connect } from 'react-redux';
+import AddButton from '../dashboard/AddButton';
 
 const useStyles = makeStyles({
   gridContainer: {
@@ -12,37 +13,18 @@ const useStyles = makeStyles({
   },
 });
 
-// var time = new Date();
-// var currentTime = time.toLocaleString('en-US', {
-//   hour: 'numeric',
-//   minute: 'numeric',
-//   hour12: true,
-// });
-// console.log(currentTime);
-
 const ProjectList = (props) => {
   const { projects, userRegisterd } = props;
-  console.log(projects);
+  console.log(projects.id);
   const classes = useStyles();
 
   function deleteProject(id) {
-    // projects((project) => {
-    //   return project.filter((projectItem, index) => {
-    //     return index !== id;
-    //   });
-    // });
     projects.filter((projectItem, index) => {
       return index !== projectItem.id;
     });
     console.log('deleteeee', projects[id]);
   }
 
-  //   var firstNameArray = userRegisterd.map(({ firstName }) => firstName);
-  //   const latestName = firstNameArray[firstNameArray.length - 1];
-
-  //   console.log('registered user', userRegisterd);
-
-  //   console.log('lastUser', latestName);
   return (
     <Fragment>
       <Grid className={classes.gridContainer} container spacing={4}>

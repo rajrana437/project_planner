@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import { deleteProject } from '../../actions/projectActions';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -39,28 +40,40 @@ function ProjectSummary(props) {
   return (
     <Grid className={classes.root} xs={12} container spacing={2}>
       <Card className={classes.root} variant='outlined'>
-        <CardContent>
-          <Typography
-            className={classes.title}
-            color='textSecondary'
-            gutterBottom
-          >
-            Project
-          </Typography>
-          <Typography variant='h5' component='h2'>
-            {props.title}
-          </Typography>
-          <Typography className={classes.pos} color='textSecondary'>
-            {props.date} {props.time}
-          </Typography>
-          <Typography variant='body2' component='p'>
-            {props.content}
-          </Typography>
-          {/* 
-          <Typography color='textSecondary'>
-            Created by {props.firstName}
-          </Typography> */}
-        </CardContent>
+        <Link
+          to={'/project/' + props.id}
+          key={props.id}
+          style={{ textDecoration: 'none', color: 'black' }}
+        >
+          <CardContent>
+            <Typography
+              className={classes.title}
+              color='textSecondary'
+              gutterBottom
+            >
+              Project
+            </Typography>
+            <Typography variant='h5' component='h2'>
+              {props.title}
+            </Typography>
+            <Typography className={classes.pos} color='textSecondary'>
+              {props.date} {props.time}
+            </Typography>
+            <Typography variant='body2' component='p'>
+              {props.content.substring(0, 45)}
+              <span
+                style={{
+                  textDecoration: 'strong',
+                  color: 'blue',
+                  fontWeight: 'strong',
+                }}
+              >
+                {' '}
+                ...read more
+              </span>
+            </Typography>
+          </CardContent>
+        </Link>
         <CardActions>
           <Button onClick={handleDelete} size='small'>
             Delete

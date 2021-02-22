@@ -9,8 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import theme from '../../theme';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
-import Dashboard from '../dashboard/Dashboard';
-import { Link, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -18,14 +17,9 @@ const useStyles = makeStyles({
       margin: theme.spacing(1),
       width: '69ch',
     },
-    // marginTop: 72,
     maxWidth: 680,
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
+
   title: {
     fontSize: 14,
   },
@@ -40,10 +34,10 @@ const useStyles = makeStyles({
 });
 
 function SignIn(props) {
+  let history = useHistory();
   const { userRegisterd } = props;
   console.log(userRegisterd);
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   const [users, setUsers] = useState({
     email: '',
@@ -61,15 +55,6 @@ function SignIn(props) {
     });
   }
   console.log(users);
-
-  // function handleSubmit(event) {
-  //   props.createProject(project);
-  //   setUsers({
-  //     title: '',
-  //     content: '',
-  //   });
-  //   event.preventDefault();
-  // }
 
   function handleSubmit(event) {
     console.log(users.email);
@@ -94,7 +79,7 @@ function SignIn(props) {
     }
     if (valid) {
       alert('Succesfully Updated');
-      window.location.href = '/create';
+      history.push('/create');
     } else {
       alert('Incorrect email or password');
       return false;

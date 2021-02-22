@@ -7,25 +7,30 @@ import Navbar from './components/layout/Navbar';
 import CreateProject from './components/projects/CreateProject';
 import ProjectDetails from './components/projects/ProjectDetails';
 import { Provider } from 'react-redux';
-import store from './store';
+import { persistor, store } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 function App() {
   return (
     <Provider store={store}>
-      <div>
-        <BrowserRouter>
-          <div>
-            <Navbar />
-            <Switch>
-              <Route exact path='/' component={Dashboard} />
-              <Route path='/project/:id' component={ProjectDetails} />
-              <Route path='/signin' component={SignIn} />
-              <Route path='/signup' component={SignUp} />
-              <Route path='/create' component={CreateProject} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </div>
+      <PersistGate loading={null} persistor={persistor}>
+        <div>
+          <BrowserRouter>
+            <div>
+              <Navbar />
+              <Switch>
+                <Route exact path='/' component={SignIn} />
+                <Route path='/project/:id' component={ProjectDetails} />
+                <Route path='/signin' component={SignIn} />
+                <Route path='/dashboard' component={Dashboard} />
+                <Route path='/signup' component={SignUp} />
+                <Route path='/create' component={CreateProject} />
+                <Route path='/project/:id' component={ProjectDetails} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </div>
+      </PersistGate>
     </Provider>
   );
 }

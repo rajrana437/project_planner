@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,11 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import theme from '../../theme';
 import { Grid } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import { createUser } from '../../actions/authActions';
-import { Redirect, Link } from 'react-router-dom';
-import SignIn from './SignIn';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +18,7 @@ const useStyles = makeStyles({
       margin: theme.spacing(1),
       width: '69ch',
     },
-    // marginTop: 72,
+
     maxWidth: 680,
   },
   bullet: {
@@ -44,7 +42,7 @@ const useStyles = makeStyles({
 function SignUp(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
-
+  let history = useHistory();
   const [users, setUsers] = useState({
     firstName: '',
     lastName: '',
@@ -73,6 +71,7 @@ function SignUp(props) {
     });
     alert('User Registered');
     event.preventDefault();
+    history.push('/signin');
     return true;
   }
 
@@ -127,12 +126,7 @@ function SignUp(props) {
               color='secondary'
               onClick={handleSubmit}
             >
-              <Link
-                style={{ textDecoration: 'none', color: 'white' }}
-                to='/signin'
-              >
-                Signup
-              </Link>
+              Signup
             </Button>
           </CardActions>
         </Card>

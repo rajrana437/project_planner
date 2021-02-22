@@ -39,7 +39,7 @@ const Navbar = () => {
           >
             <Grid item>
               <NavLink
-                to='/'
+                to='/dashboard'
                 style={{ textDecoration: 'none', color: 'white' }}
               >
                 <Typography type='title' color='inherit' variant='h4'>
@@ -50,11 +50,6 @@ const Navbar = () => {
 
             <Grid item>
               <div>
-                <NavLink to='/create' style={{ textDecoration: 'none' }}>
-                  <Button raised color='accent'>
-                    New Project
-                  </Button>
-                </NavLink>
                 <NavLink to='/signup' style={{ textDecoration: 'none' }}>
                   <Button raised color='accent'>
                     Sign Up

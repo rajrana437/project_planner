@@ -10,7 +10,7 @@ import theme from '../../theme';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { createProject } from '../../actions/projectActions';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 var today = new Date();
 var dd = today.getDate();
@@ -39,8 +39,8 @@ const useStyles = makeStyles({
       margin: theme.spacing(1),
       width: '69ch',
     },
-    // marginTop: 72,
-    maxWidth: 720,
+
+    maxWidth: 680,
   },
   bullet: {
     display: 'inline-block',
@@ -89,8 +89,10 @@ function CreateProject(props) {
       content: '',
     });
     event.preventDefault();
-  }
 
+    history.push('/dashboard');
+  }
+  let history = useHistory();
   return (
     <Grid className={classes.gridContainer} container spacing={4}>
       <Grid item xs={12}>
@@ -124,9 +126,7 @@ function CreateProject(props) {
               color='secondary'
               onClick={handleSubmit}
             >
-              <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
-                Submit
-              </Link>
+              Submit
             </Button>
           </CardActions>
         </Card>
